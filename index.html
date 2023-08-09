@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bingo</title>
+    <script src="https://kit.fontawesome.com/82a70df38e.js" crossorigin="anonymous"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400&display=swap');
+        body {
+            background: radial-gradient(circle at 75%, #202020, #0e0e0e);
+            background-attachment: fixed;
+            font-family: "Roboto Slab";
+            overflow: hidden;
+        }
+        #title_card {
+            color: white;
+            font-size: 100px;
+            font-weight: 400;
+            transition: color ease 0.3s;
+            user-select: none;
+            position: absolute;
+            top: 25px;
+            left: 150px;
+        }
+        #title_card:hover {
+            color: lawngreen;
+        }
+
+        .title_button {
+            font-family: "Roboto Slab";
+            background-color: transparent;
+            border: none;
+            color: white;
+            position: absolute;
+            left: 165px;
+            user-select: none;
+            cursor: pointer;
+            font-weight: 300;
+            font-size: 50px;
+        }
+        .title_button:hover {
+            transition: color ease 0.3s;
+            color: lawngreen;
+        }
+
+        #title_join {
+            top: 300px;
+        }
+        #title_host {
+            top: 385px;
+        }
+
+        @media only screen and (max-width: 560px) {
+            #title_card, .title_button {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+
+        #window {
+            position: absolute;
+            width: 1000px;
+            height: 526px;
+            border-radius: 8px;
+            box-shadow: 5px 5px 10px #00000077;
+            opacity: 0;
+            transition: ease-in 75ms;
+            transition-property: opacity;
+            top: 250px;
+            left: 500px;
+        }
+
+        #window_titlebar {
+            position: absolute;
+            height: 29px;
+            width: 100%;
+            background-color: white;
+            border-start-end-radius: 8px;
+            border-start-start-radius: 8px;
+        }
+
+        #window_contents {
+            position: absolute;
+            top: 29px;
+            width: 100%;
+            left: 0;
+            height: 497px;
+            border-end-end-radius: 8px;
+            border-end-start-radius: 8px;
+            background-color: #55aa00;
+        }
+
+        #x_button {
+            position: absolute;
+            background-color: transparent;
+            right: 0;
+            top: 0;
+            height: 28px;
+            width: 28px;
+            border-start-end-radius: 7px;
+            color: black;
+            border: none;
+        }
+        #x_button:hover {
+            background-color: red;
+            color: white;
+        }
+
+        .join_contents p {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            font-weight: 400;
+            transform: translateX(-50%);
+            font-size: 65px;
+            color: black;
+            border-radius: 20px;
+            border: 5px solid #c7c7c7;
+            padding: 0 15px 3px 15px;
+            background-color: #f1f1f1;
+        }
+
+        .join_contents div {
+            top: 250px;
+            left: 50%;
+            transform: translate(-50%);
+        }
+
+        #window_title {
+            font-weight: 400;
+            font-size: 12px;
+            position: absolute;
+            top: -7px;
+            left: 30px;
+        }
+
+        #window_titlebar img {
+            position: absolute;
+            top: 7px;
+            left: 8px;
+        }
+    </style>
+</head>
+<body>
+    <p id="title_card">Bingo</p>
+    <button id="title_join" class="title_button" onclick="open_menu('join')">Join</button>
+    <button id="title_host" class="title_button" onclick="open_menu('host')">Host</button>
+
+    <div id="window" style="display: none" draggable_object="window_titlebar" class="draggable">
+        <div id="window_titlebar">
+            <img src="default_icon.png" width="16" />
+            <p id="window_title"></p>
+            <button id="x_button" onclick="close_menu()">
+                <i class="fa-solid fa-x"></i>
+            </button>
+        </div>
+        <div id="window_contents">
+            <div id="window_join" class="join_contents">
+                <p>Enter Game ID</p>
+                <div></div>
+            </div>
+            <div id="window_host" class="join_contents">host</div>
+        </div>
+    </div>
+    <script src="drag.js"></script>
+    <script>
+        let window_object = document.getElementById("window");
+        let host_contents = document.getElementById("window_host");
+        let join_contents = document.getElementById("window_join");
+        let title = document.getElementById("window_title");
+
+        join_contents.style.display = "none";
+        host_contents.style.display = "none";
+        function close_menu() {
+            window_object.style.opacity = 0;
+            setTimeout(function () {
+                window_object.style.display = "none";
+                join_contents.style.display = "none";
+                host_contents.style.display = "none";
+            }, 75);
+        }
+        function open_menu(type) {
+            if (window_object.style.display == "none") {
+                window_object.style.display = "block";
+                window_object.style.opacity = 1;
+                if (type == "host") {
+                    title.innerHTML = "Host a Game";
+                    host_contents.style.display = "block";
+                } else {
+                    title.innerHTML = "Join a Game";
+                    join_contents.style.display = "block";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
